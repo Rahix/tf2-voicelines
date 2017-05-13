@@ -1,0 +1,23 @@
+{
+  "name": "tf2-voicelines",
+  "authors": [
+    "Rahix <h.w.seiler@gmx.de>"
+  ],
+  "description": "An easy to use website to play tf2 voicelines and get a link to share them",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "flat-ui": "^2.3.0",
+    "vue": "^2.3.3",
+    "lodash": "^4.17.4"
+  }
+}

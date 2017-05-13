@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TF2 Voicelines</title>
+    <meta name="description" content="WIP"/>
+
+    <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="bower_components/flat-ui/dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="bower_components/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="bower_components/flat-ui/img/favicon.ico">
+
+    <style>
+      body {
+        padding-top: 70px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="dist/js/vendor/html5shiv.js"></script>
+      <script src="dist/js/vendor/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">TF2 Voicelines</a>
+        </div>
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="cointainer" id="app">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="search" class="form-control" placeholder="Search" v-model="search"/>
+              <span class="input-group-btn">
+                <button type="submit" class="btn"><span class="fui-search"></span></button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <h5>Classes</h3>
+          <div class="form-group">
+            <div v-for="cls in class_filters">
+              <label class="checkbox" :for="'checkbox-' + cls.id">
+                <input type="checkbox" checked="checked" :id="'checkbox-' + cls.id" value="" data-toggle="checkbox" v-model="cls.val">
+                {{ cls.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Play</th>
+                <th>Text</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="vl in filter(voicelines)">
+                <td>{{ vl.cls }}</td>
+                <td><a @click="play(vl.link)"><span class="fui-play"></span></a></td>
+                <td>{{ vl.text }}</td>
+                <td><a :href="vl.link">Link</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <span id="audio-container"></span>
+    <script src="bower_components/flat-ui/dist/js/vendor/jquery.min.js"></script>
+    <script src="bower_components/flat-ui/dist/js/vendor/video.js"></script>
+    <script src="bower_components/flat-ui/dist/js/flat-ui.min.js"></script>
+    <script src="bower_components/flat-ui/docs/assets/js/application.js"></script>
+    <script src="bower_components/lodash/dist/lodash.js"></script>
+    <script src="bower_components/vue/dist/vue.js"></script>
+    <script src="index.js"></script>
+
+    <script>
+      videojs.options.flash.swf = "bower_components/flat-ui/dist/js/vendors/video-js.swf"
+    </script>
+  </body>
+</html>
