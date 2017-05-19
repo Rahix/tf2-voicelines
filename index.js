@@ -15,7 +15,11 @@ var app = new Vue({
       {id: "sniper", name: "Sniper", val: false},
       {id: "spy", name: "Spy", val: false},
       {id: "admin", name: "Administrator", val: false},
-      {id: "misspauling", name: "Miss Pauling", val: false}
+      {id: "misspauling", name: "Miss Pauling", val: false},
+      {id: "hhh", name: "Horseless Headless Horsemann", val: false},
+      {id: "monoculus", name: "Monoculus", val: false},
+      {id: "merasmus", name: "Merasmus", val: false},
+      {id: "pumpkin", name: "Pumpkin Bomb", val: false}
     ]
   },
   watch: {
