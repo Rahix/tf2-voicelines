@@ -19,7 +19,11 @@ var app = new Vue({
       {id: "hhh", name: "Horseless Headless Horsemann", val: false},
       {id: "monoculus", name: "Monoculus", val: false},
       {id: "merasmus", name: "Merasmus", val: false},
-      {id: "pumpkin", name: "Pumpkin Bomb", val: false}
+      {id: "bombinomicon", name: "Bombinomicon", val: false},
+      {id: "pumpkin", name: "Pumpkin Bomb", val: false},
+      {id: "redmond", name: "Redmond Mann", val: false},
+      {id: "blutarch", name: "Blutarch Mann", val: false},
+      {id: "brothers", name: "Mann Brothers", val: false}
     ]
   },
   watch: {
