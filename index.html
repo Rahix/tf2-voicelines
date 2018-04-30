@@ -54,7 +54,7 @@
           <div class="form-group">
             <div v-for="cls in class_filters">
               <label class="checkbox" :for="'checkbox-' + cls.id">
-                <input type="checkbox" checked="checked" :id="'checkbox-' + cls.id" value="" data-toggle="checkbox" v-model="cls.val">
+                <input type="checkbox" checked="checked" :id="'checkbox-' + cls.id" v-on:click="start_filter()" value="" data-toggle="checkbox" v-model="cls.val">
                 {{ cls.name }}
               </label>
             </div>
@@ -71,7 +71,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="vl in filter(voicelines)">
+              <tr v-for="vl in filtered_voicelines">
                 <td>{{ vl.cls }}</td>
                 <td><a @click="play(vl.link)"><span class="fui-play"></span></a></td>
                 <td>{{ vl.text }}</td>

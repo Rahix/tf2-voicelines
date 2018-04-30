@@ -2,11 +2,14 @@ var app = new Vue({
   el: "#app",
   data: {
     voicelines: [],
+    filtered_voicelines: [],
     search: "",
-    search_debounced: "",
+    searching: false,
+    last_call: -1,
+    current_index: 0,
     class_filters: [
-      {id: "scout", name: "Scout", val: true},
-      {id: "soldier", name: "Soldier", val: false},
+      {id: "scout", name: "Scout", val: false},
+      {id: "soldier", name: "Soldier", val: true},
       {id: "pyro", name: "Pyro", val: false},
       {id: "demo", name: "Demoman", val: false},
       {id: "heavy", name: "Heavy", val: false},
@@ -27,36 +30,56 @@ var app = new Vue({
     ]
   },
   watch: {
-    search: _.debounce(function() {
-      this.search_debounced = this.search;
-    }, 100)
+    "search": function() {
+      this.start_filter();
+    },
   },
   methods: {
     play: function(link) {
       var audio = document.getElementById("audio-container");
       audio.innerHTML = "<audio autoplay><source src=\"" + link + "\"></source></audio>";
     },
-    filter: function(voicelines) {
+    start_filter: function() {
+      console.log("Start search");
       var _this = this;
-      var search = this.search_debounced.toUpperCase();
-      var vl_new = voicelines.filter(function(vl) {
-        for(var i = 0; i < _this.class_filters.length; i++) {
-          if(vl.cls == _this.class_filters[i].name) { // If this class is the class of the voiceline
-            if(_this.class_filters[i].val == true) { // If this class is to be filtered out
-              if(search == "" || vl.text.toUpperCase().includes(search)) {
-                return true;
-              } else {
-                return false;
+      var search = this.search.toUpperCase();
+      // Empty list
+      this.filtered_voicelines.splice(0);
+      _this.current_index = 0;
+      if(_this.last_call != -1) {
+        console.log("cancelling previous search")
+        cancelAnimationFrame(_this.last_call);
+        _this.last_call = -1;
+      }
+      var BATCH_SIZE = 200;
+      // Refill it async
+      function do_filter() {
+        console.log(_this.current_index);
+        for(var a = 0; a < BATCH_SIZE; a++) {
+          if((_this.current_index + a) >= _this.voicelines.length) {
+            continue
+          }
+          var vl = _this.voicelines[_this.current_index + a];
+          for(var i = 0; i < _this.class_filters.length; i++) {
+            if(vl.cls == _this.class_filters[i].name) { // If this class is the class of the voiceline
+              if(_this.class_filters[i].val == true) { // If this class is to be filtered out
+                if(search == "" || vl.text.toUpperCase().includes(search)) {
+                  _this.filtered_voicelines.push(vl);
+                }
               }
-            } else {
-              return false;
             }
           }
         }
-        return false;
-      });
-      this.searching = false;
-      return vl_new;
+
+        _this.current_index += BATCH_SIZE;
+        if(_this.current_index < _this.voicelines.length) {
+          _this.last_call = requestAnimationFrame(do_filter);
+        } else {
+          console.log("Done")
+        }
+      }
+
+      _this.last_call = requestAnimationFrame(do_filter);
     }
   },
 });
@@ -64,4 +87,5 @@ var app = new Vue({
 // Load vl file
 $.ajax("voicelines.json").done(function(data) {
   app.voicelines = data;
+  app.start_filter();
 });
