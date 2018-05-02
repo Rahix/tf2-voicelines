@@ -89,3 +89,5 @@ $.ajax("voicelines.json").done(function(data) {
   app.voicelines = data;
   app.start_filter();
 });
+
+var clipboard = new ClipboardJS('.btn');

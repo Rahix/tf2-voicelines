@@ -71,11 +71,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="vl in filtered_voicelines">
+              <tr v-for="(vl, index) in filtered_voicelines">
                 <td>{{ vl.cls }}</td>
                 <td><a @click="play(vl.link)"><span class="fui-play"></span></a></td>
                 <td>{{ vl.text }}</td>
-                <td><a :href="vl.link">Link</a></td>
+                <!--<td><a :href="vl.link">Link</a></td>-->
+                <td>
+                  <div class="input-group">
+                    <input class="form-control" :id="'vl-' + index" :value="vl.link" />
+                    <span class="input-group-btn">
+                      <button class="btn" :data-clipboard-target="'#vl-' + index">
+                        <span class="fui-clip"></span>
+                      </button>
+                    </span>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -88,6 +98,7 @@
     <script src="bower_components/flat-ui/dist/js/flat-ui.min.js"></script>
     <script src="bower_components/flat-ui/docs/assets/js/application.js"></script>
     <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/clipboard/dist/clipboard.min.js"></script>
     <script src="bower_components/vue/dist/vue.min.js"></script>
     <script src="index.js"></script>
 
