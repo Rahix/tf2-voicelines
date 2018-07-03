@@ -33,6 +33,12 @@ var app = new Vue({
     "search": function() {
       this.start_filter();
     },
+    "class_filters": {
+      handler: function() {
+        this.start_filter();
+      },
+      deep: true,
+    },
   },
   methods: {
     play: function(link) {
