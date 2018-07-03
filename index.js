@@ -46,21 +46,18 @@ var app = new Vue({
       audio.innerHTML = "<audio autoplay><source src=\"" + link + "\"></source></audio>";
     },
     start_filter: function() {
-      console.log("Start search");
       var _this = this;
       var search = this.search.toUpperCase();
       // Empty list
       this.filtered_voicelines.splice(0);
       _this.current_index = 0;
       if(_this.last_call != -1) {
-        console.log("cancelling previous search")
         cancelAnimationFrame(_this.last_call);
         _this.last_call = -1;
       }
       var BATCH_SIZE = 200;
       // Refill it async
       function do_filter() {
-        console.log(_this.current_index);
         for(var a = 0; a < BATCH_SIZE; a++) {
           if((_this.current_index + a) >= _this.voicelines.length) {
             continue
